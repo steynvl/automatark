@@ -3,8 +3,10 @@ package RegexParser;
 import java.io.PrintWriter;
 
 public class StarNode extends RegexNode {
-	public StarNode(RegexNode r1) {
+
+	public StarNode(RegexNode r1, QuantifierType quantifierType) {
 		myRegex1 = r1;
+		this.quantifierType = quantifierType;
 
 	}
 
@@ -28,5 +30,7 @@ public class StarNode extends RegexNode {
 
 	// one kid
 	protected RegexNode myRegex1;
+
+	public QuantifierType quantifierType;
 
 }

@@ -67,18 +67,32 @@ concateList	::=	concateList basicRegex
 basicRegex	::= "(" regexNode ")" 
                
                 | basicRegex "*" 
-                
-                | basicRegex "+" 
-                
-                | basicRegex "?" 
-                
+                | basicRegex "*+"
+                | basicRegex "*?"
+
+                | basicRegex "+"
+                | basicRegex "++"
+                | basicRegex "+?"
+
+                | basicRegex "?"
+                | basicRegex "?+"
+                | basicRegex "??"
+
                 | "."           // meta character, all characters except line breaker
-                   
+
                 | outsideChar   //chacters that can be outside of characterClass
-                
+
                 | characterClass
-                
+
                 | notcharacterClass
+
+                | "(?=" regexNode ")"
+
+                | "(?!" regexNode ")"
+
+                | "(?>" regexNode ")"
+
+                | "(?:" regexNode ")"
 
                 | "(" regexNode ")" "{" integer "}"
                                      

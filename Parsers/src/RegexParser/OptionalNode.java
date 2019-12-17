@@ -3,8 +3,10 @@ package RegexParser;
 import java.io.PrintWriter;
 
 public class OptionalNode extends RegexNode {
-	public OptionalNode(RegexNode r1) {
+
+	public OptionalNode(RegexNode r1, QuantifierType quantifierType) {
 		myRegex1 = r1;
+		this.quantifierType = quantifierType;
 
 	}
 
@@ -28,5 +30,7 @@ public class OptionalNode extends RegexNode {
 
 	// one kid
 	protected RegexNode myRegex1;
+
+	public QuantifierType quantifierType;
 
 }

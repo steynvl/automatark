@@ -63,11 +63,12 @@ class Yylex implements java_cup.runtime.Scanner {
    * Translates characters to character classes
    */
   private static final String ZZ_CMAP_PACKED = 
-    "\12\0\1\4\31\0\1\27\3\0\1\32\1\33\1\24\1\23\1\37"+
-    "\1\21\1\22\1\0\12\1\5\0\1\25\2\0\1\12\1\0\1\14"+
-    "\16\0\1\16\3\0\1\3\3\0\1\30\1\2\1\31\1\26\3\0"+
-    "\1\11\1\0\1\13\1\0\1\10\7\0\1\6\3\0\1\7\1\15"+
-    "\1\5\1\0\1\17\1\20\3\0\1\34\1\36\1\35\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uff92\0";
+    "\12\0\1\4\26\0\1\34\2\0\1\27\3\0\1\32\1\37\1\25"+
+    "\1\23\1\43\1\21\1\22\1\0\12\1\1\36\2\0\1\33\1\35"+
+    "\1\24\2\0\1\12\1\0\1\14\16\0\1\16\3\0\1\3\3\0"+
+    "\1\30\1\2\1\31\1\26\3\0\1\11\1\0\1\13\1\0\1\10"+
+    "\7\0\1\6\3\0\1\7\1\15\1\5\1\0\1\17\1\20\3\0"+
+    "\1\40\1\42\1\41\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uff92\0";
 
   /** 
    * Translates characters to character classes
@@ -84,10 +85,11 @@ class Yylex implements java_cup.runtime.Scanner {
     "\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16"+
     "\1\17\1\20\1\21\1\22\1\23\1\24\1\25\1\26"+
     "\1\27\1\30\1\31\1\32\1\33\1\34\1\35\1\36"+
-    "\1\37\1\40";
+    "\1\37\1\40\1\41\1\42\1\43\1\44\1\45\1\46"+
+    "\1\0\1\47\1\50\1\51\1\52";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[34];
+    int [] result = new int[45];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -112,14 +114,15 @@ class Yylex implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\40\0\40\0\100\0\40\0\40\0\40\0\40"+
-    "\0\40\0\40\0\40\0\40\0\40\0\40\0\40\0\40"+
-    "\0\40\0\40\0\40\0\40\0\40\0\40\0\40\0\40"+
-    "\0\40\0\40\0\40\0\40\0\40\0\40\0\40\0\40"+
-    "\0\40\0\40";
+    "\0\0\0\44\0\44\0\110\0\44\0\44\0\44\0\154"+
+    "\0\220\0\264\0\44\0\44\0\44\0\44\0\330\0\44"+
+    "\0\44\0\44\0\44\0\44\0\44\0\44\0\44\0\44"+
+    "\0\44\0\44\0\44\0\44\0\44\0\44\0\44\0\44"+
+    "\0\44\0\44\0\44\0\44\0\44\0\44\0\44\0\44"+
+    "\0\374\0\44\0\44\0\44\0\44";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[34];
+    int [] result = new int[45];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -144,12 +147,14 @@ class Yylex implements java_cup.runtime.Scanner {
   private static final String ZZ_TRANS_PACKED_0 =
     "\1\2\1\3\1\4\1\2\1\5\14\2\1\6\1\7"+
     "\1\10\1\11\1\12\1\13\1\14\1\15\1\16\1\17"+
-    "\1\20\1\21\1\22\1\23\1\24\40\0\3\25\1\26"+
-    "\1\25\1\27\1\30\1\31\1\32\1\33\1\34\1\35"+
-    "\1\36\1\37\1\40\1\41\1\42\17\25";
+    "\4\2\1\20\1\21\1\22\1\23\1\24\44\0\3\25"+
+    "\1\26\1\25\1\27\1\30\1\31\1\32\1\33\1\34"+
+    "\1\35\1\36\1\37\1\40\1\41\1\42\23\25\23\0"+
+    "\1\43\1\44\42\0\1\45\1\46\42\0\1\47\1\50"+
+    "\43\0\1\51\52\0\1\52\1\53\1\54\1\55\5\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[96];
+    int [] result = new int[288];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -187,10 +192,11 @@ class Yylex implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\2\11\1\1\36\11";
+    "\1\0\2\11\1\1\3\11\3\1\4\11\1\1\31\11"+
+    "\1\0\4\11";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[34];
+    int [] result = new int[45];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -286,7 +292,7 @@ class Yylex implements java_cup.runtime.Scanner {
     char [] map = new char[0x110000];
     int i = 0;  /* index in packed string  */
     int j = 0;  /* index in unpacked array */
-    while (i < 130) {
+    while (i < 140) {
       int  count = packed.charAt(i++);
       char value = packed.charAt(i++);
       do map[j++] = value; while (--count > 0);
@@ -642,7 +648,7 @@ return new Symbol(sym.EOF);
             CharNum.num += yytext().length();
             return S;
             }
-          case 33: break;
+          case 43: break;
           case 2: 
             { String val = yytext();
             char charVal = val.charAt(0);
@@ -651,101 +657,101 @@ return new Symbol(sym.EOF);
             CharNum.num += yytext().length();
             return S;
             }
-          case 34: break;
+          case 44: break;
           case 3: 
             { CharNum.num = 1;
             }
-          case 35: break;
+          case 45: break;
           case 4: 
             { Symbol S = new Symbol(sym.MINUS, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
             }
-          case 36: break;
+          case 46: break;
           case 5: 
             { Symbol S = new Symbol(sym.DOT, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
             }
-          case 37: break;
+          case 47: break;
           case 6: 
-            { Symbol S = new Symbol(sym.PLUS, new TokenVal(yyline+1, CharNum.num));
+            { Symbol S = new Symbol(sym.GREEDY_PLUS, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
             }
-          case 38: break;
+          case 48: break;
           case 7: 
-            { Symbol S = new Symbol(sym.STAR, new TokenVal(yyline+1, CharNum.num));
+            { Symbol S = new Symbol(sym.GREEDY_OPTIONAL, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
             }
-          case 39: break;
+          case 49: break;
           case 8: 
-            { Symbol S = new Symbol(sym.OPTIONAL, new TokenVal(yyline+1, CharNum.num));
+            { Symbol S = new Symbol(sym.GREEDY_STAR, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
             }
-          case 40: break;
+          case 50: break;
           case 9: 
             { Symbol S = new Symbol(sym.CARET, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
             }
-          case 41: break;
+          case 51: break;
           case 10: 
             { Symbol S = new Symbol(sym.DOLLAR, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
             }
-          case 42: break;
+          case 52: break;
           case 11: 
             { Symbol S = new Symbol(sym.LBRACKET, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
             }
-          case 43: break;
+          case 53: break;
           case 12: 
             { Symbol S = new Symbol(sym.RBRACKET, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
             }
-          case 44: break;
+          case 54: break;
           case 13: 
             { Symbol S = new Symbol(sym.LPAREN, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
             }
-          case 45: break;
+          case 55: break;
           case 14: 
             { Symbol S = new Symbol(sym.RPAREN, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
             }
-          case 46: break;
+          case 56: break;
           case 15: 
             { Symbol S = new Symbol(sym.LCURLY, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
             }
-          case 47: break;
+          case 57: break;
           case 16: 
             { Symbol S = new Symbol(sym.RCURLY, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
             }
-          case 48: break;
+          case 58: break;
           case 17: 
             { Symbol S = new Symbol(sym.UNION, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
             }
-          case 49: break;
+          case 59: break;
           case 18: 
             { Symbol S = new Symbol(sym.COMMA, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
             }
-          case 50: break;
+          case 60: break;
           case 19: 
             { String val = yytext();
             char charVal = val.charAt(1);
@@ -754,85 +760,145 @@ return new Symbol(sym.EOF);
             CharNum.num += yytext().length();
             return S;
             }
-          case 51: break;
+          case 61: break;
           case 20: 
             { Symbol S = new Symbol(sym.METANOTWORD, new TokenVal(yyline+1, CharNum.num));
             CharNum.num+=2;
             return S;
             }
-          case 52: break;
+          case 62: break;
           case 21: 
             { Symbol S = new Symbol(sym.METATAB, new TokenVal(yyline+1, CharNum.num));
             CharNum.num+=2;
             return S;
             }
-          case 53: break;
+          case 63: break;
           case 22: 
             { Symbol S = new Symbol(sym.METANEWLINE, new TokenVal(yyline+1, CharNum.num));
             CharNum.num+=2;
             return S;
             }
-          case 54: break;
+          case 64: break;
           case 23: 
             { Symbol S = new Symbol(sym.METARETURN, new TokenVal(yyline+1, CharNum.num));
             CharNum.num+=2;
             return S;
             }
-          case 55: break;
+          case 65: break;
           case 24: 
             { Symbol S = new Symbol(sym.METAFEED, new TokenVal(yyline+1, CharNum.num));
             CharNum.num+=2;
             return S;
             }
-          case 56: break;
+          case 66: break;
           case 25: 
             { Symbol S = new Symbol(sym.METABOUNDARY, new TokenVal(yyline+1, CharNum.num));
             CharNum.num+=2;
             return S;
             }
-          case 57: break;
+          case 67: break;
           case 26: 
             { Symbol S = new Symbol(sym.METANOTBOUNDARY, new TokenVal(yyline+1, CharNum.num));
             CharNum.num+=2;
             return S;
             }
-          case 58: break;
+          case 68: break;
           case 27: 
             { Symbol S = new Symbol(sym.METADIGIT, new TokenVal(yyline+1, CharNum.num));
             CharNum.num+=2;
             return S;
             }
-          case 59: break;
+          case 69: break;
           case 28: 
             { Symbol S = new Symbol(sym.METANOTDIGIT, new TokenVal(yyline+1, CharNum.num));
             CharNum.num+=2;
             return S;
             }
-          case 60: break;
+          case 70: break;
           case 29: 
             { Symbol S = new Symbol(sym.METASPACE, new TokenVal(yyline+1, CharNum.num));
             CharNum.num+=2;
             return S;
             }
-          case 61: break;
+          case 71: break;
           case 30: 
             { Symbol S = new Symbol(sym.METANOTSPACE, new TokenVal(yyline+1, CharNum.num));
             CharNum.num+=2;
             return S;
             }
-          case 62: break;
+          case 72: break;
           case 31: 
             { Symbol S = new Symbol(sym.METAVERTICALTAB, new TokenVal(yyline+1, CharNum.num));
             CharNum.num+=2;
             return S;
             }
-          case 63: break;
+          case 73: break;
           case 32: 
             { Symbol S = new Symbol(sym.METAWORD, new TokenVal(yyline+1, CharNum.num));
             CharNum.num+=2;
             return S;
             }
-          case 64: break;
+          case 74: break;
+          case 33: 
+            { Symbol S = new Symbol(sym.POSSESSIVE_PLUS, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += 2;
+            return S;
+            }
+          case 75: break;
+          case 34: 
+            { Symbol S = new Symbol(sym.LAZY_PLUS, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += 2;
+            return S;
+            }
+          case 76: break;
+          case 35: 
+            { Symbol S = new Symbol(sym.POSSESSIVE_OPTIONAL, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += 2;
+            return S;
+            }
+          case 77: break;
+          case 36: 
+            { Symbol S = new Symbol(sym.LAZY_OPTIONAL, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += 2;
+            return S;
+            }
+          case 78: break;
+          case 37: 
+            { Symbol S = new Symbol(sym.POSSESSIVE_STAR, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += 2;
+            return S;
+            }
+          case 79: break;
+          case 38: 
+            { Symbol S = new Symbol(sym.LAZY_STAR, new TokenVal(yyline+1, CharNum.num));
+          CharNum.num += 2;
+          return S;
+            }
+          case 80: break;
+          case 39: 
+            { Symbol S = new Symbol(sym.POS_LOOKAHEAD, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += 3;
+            return S;
+            }
+          case 81: break;
+          case 40: 
+            { Symbol S = new Symbol(sym.NEG_LOOKAHEAD, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += 3;
+            return S;
+            }
+          case 82: break;
+          case 41: 
+            { Symbol S = new Symbol(sym.ATOMIC_GROUP, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += 3;
+            return S;
+            }
+          case 83: break;
+          case 42: 
+            { Symbol S = new Symbol(sym.NON_CAPTURE, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += 3;
+            return S;
+            }
+          case 84: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

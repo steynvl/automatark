@@ -41,9 +41,15 @@ terminal CharTokenVal NOTDIGIT;
 
 terminal  TokenVal MINUS;
 terminal  TokenVal DOT;
-terminal  TokenVal PLUS;
-terminal  TokenVal STAR;
-terminal  TokenVal OPTIONAL;
+terminal  TokenVal GREEDY_PLUS;
+terminal  TokenVal POSSESSIVE_PLUS;
+terminal  TokenVal LAZY_PLUS;
+terminal  TokenVal GREEDY_STAR;
+terminal  TokenVal POSSESSIVE_STAR;
+terminal  TokenVal LAZY_STAR;
+terminal  TokenVal GREEDY_OPTIONAL;
+terminal  TokenVal POSSESSIVE_OPTIONAL;
+terminal  TokenVal LAZY_OPTIONAL;
 terminal  TokenVal CARET;
 terminal  TokenVal DOLLAR;
 terminal  TokenVal LBRACKET;
@@ -54,6 +60,11 @@ terminal  TokenVal LCURLY;
 terminal  TokenVal RCURLY;
 terminal  TokenVal UNION;
 terminal  TokenVal COMMA;
+
+terminal  TokenVal POS_LOOKAHEAD;
+terminal  TokenVal NEG_LOOKAHEAD;
+terminal  TokenVal ATOMIC_GROUP;
+terminal  TokenVal NON_CAPTURE;
 
 
 /* Nonterminals */
@@ -75,196 +86,307 @@ non terminal NotCharacterClassNode notcharacterClass;
 /* precedence and associativity declarations */
 precedence left UNION;
 precedence left MINUS;
-precedence left STAR, PLUS, OPTIONAL, CARET, LPAREN, RPAREN,DIGIT;
+precedence left GREEDY_STAR, POSSESSIVE_STAR, LAZY_STAR, GREEDY_PLUS, POSSESSIVE_PLUS, LAZY_PLUS, GREEDY_OPTIONAL, POSSESSIVE_OPTIONAL, LAZY_OPTIONAL, CARET, LPAREN, RPAREN,DIGIT;
 precedence right LCURLY, RBRACKET;
 precedence left RCURLY, LBRACKET;
 precedence left DOLLAR, CARET;
-
 
 
 /* Grammar with actions */
 
 start with program;
 
-
-
 program ::= regexNode: r
         {: RESULT = r;
         :}
         ;
 
-regexNode	::= CARET unionRegex:r 
-            {: RESULT = new AnchorNode(r,true,false); 
+regexNode	::= CARET unionRegex:r
+            {: RESULT = new AnchorNode(r,true,false);
             :}
             | CARET unionRegex:r DOLLAR
-            {: RESULT = new AnchorNode(r,true,true); 
+            {: RESULT = new AnchorNode(r,true,true);
             :}
             | unionRegex:r DOLLAR
-            {: RESULT = new AnchorNode(r,false,true); 
+            {: RESULT = new AnchorNode(r,false,true);
             :}
             | unionRegex:r
             {: RESULT = r;
             :}
             ;
 
-unionRegex ::=	unionRegex:r1 UNION simpleRegex:r2 
-            {: RESULT = new UnionNode(r1,r2); 
+unionRegex ::=	unionRegex:r1 UNION simpleRegex:r2
+            {: RESULT = new UnionNode(r1,r2);
             :}
-            | simpleRegex:r    
-            {: RESULT = r; 
+            | simpleRegex:r
+            {: RESULT = r;
             :}
             ;
 
 
-simpleRegex ::= concateList:l  
+simpleRegex ::= concateList:l
             {: RESULT = new ConcatenationNode(l);
             :}
             ;
-            
+
 concateList	::=	concateList:rlist basicRegex:r
             {: rlist.addLast(r);
                RESULT = rlist;
             :}
             | /* epsilon */
-            {: RESULT = new LinkedList<RegexNode>(); 
+            {: RESULT = new LinkedList<RegexNode>();
             :}
-            ; 
+            ;
 
-basicRegex	    ::=	 LPAREN regexNode:r RPAREN 
-                {: RESULT = r; 
+basicRegex	    ::=	 LPAREN regexNode:r RPAREN
+                {: RESULT = r;
                 :}
-                | basicRegex:r STAR 
-                {: RESULT = new StarNode(r); 
+                | basicRegex:r POSSESSIVE_STAR
+                {: RESULT = new StarNode(r, QuantifierType.POSSESSIVE);
                 :}
-                | basicRegex:r PLUS 
-                {: RESULT = new PlusNode(r); 
+                | basicRegex:r LAZY_STAR
+                {: RESULT = new StarNode(r, QuantifierType.LAZY);
                 :}
-                | basicRegex:r OPTIONAL 
-                {: RESULT = new OptionalNode(r); 
+                | basicRegex:r GREEDY_STAR
+                {: RESULT = new StarNode(r, QuantifierType.GREEDY);
+                :}
+                | basicRegex:r POSSESSIVE_PLUS
+                {: RESULT = new PlusNode(r, QuantifierType.POSSESSIVE);
+                :}
+                | basicRegex:r GREEDY_PLUS
+                {: RESULT = new PlusNode(r, QuantifierType.GREEDY);
+                :}
+                | basicRegex:r LAZY_PLUS
+                {: RESULT = new PlusNode(r, QuantifierType.LAZY);
+                :}
+                | basicRegex:r GREEDY_OPTIONAL
+                {: RESULT = new OptionalNode(r, QuantifierType.GREEDY);
+                :}
+                | basicRegex:r POSSESSIVE_OPTIONAL
+                {: RESULT = new OptionalNode(r, QuantifierType.POSSESSIVE);
+                :}
+                | basicRegex:r LAZY_OPTIONAL
+                {: RESULT = new OptionalNode(r, QuantifierType.LAZY);
                 :}
                 | DOT
-                {: RESULT = new DotNode('.'); 
-                :}  
-                | outsideChar: c 
-                {: RESULT = c; 
+                {: RESULT = new DotNode('.');
+                :}
+                | outsideChar: c
+                {: RESULT = c;
                 :}
                 | characterClass:c
-                {: RESULT = c; 
+                {: RESULT = c;
                 :}
                 | notcharacterClass:c
-                {: RESULT = c; 
+                {: RESULT = c;
                 :}
+                | POS_LOOKAHEAD regexNode:r RPAREN
+                {: RESULT = new PositiveLookaheadNode(r);
+                :}
+                | NEG_LOOKAHEAD regexNode:r RPAREN
+                {: RESULT = new NegativeLookaheadNode(r);
+                :}
+                | ATOMIC_GROUP regexNode:r RPAREN
+                {: RESULT = new AtomicGroupNode(r);
+                :}
+                | NON_CAPTURE regexNode:r RPAREN
+                {: RESULT = r;
+                :}
+
                 | LPAREN regexNode:r RPAREN LCURLY integer:i RCURLY
-                {: RESULT = new RepetitionNode(1,r,i); 
-                :}                      
+                {: RESULT = new RepetitionNode(1, r, i, QuantifierType.GREEDY);
+                :}
+                | LPAREN regexNode:r RPAREN LCURLY integer:i RCURLY GREEDY_PLUS
+                {: RESULT = new RepetitionNode(1, r, i, QuantifierType.POSSESSIVE);
+                :}
+                | LPAREN regexNode:r RPAREN LCURLY integer:i RCURLY GREEDY_OPTIONAL
+                {: RESULT = new RepetitionNode(1, r, i, QuantifierType.LAZY);
+                :}
+
                 | LPAREN regexNode:r RPAREN LCURLY integer:i COMMA  RCURLY
-                {: RESULT = new RepetitionNode(2,r,i); 
+                {: RESULT = new RepetitionNode(2, r, i, QuantifierType.GREEDY);
                 :}
+                 | LPAREN regexNode:r RPAREN LCURLY integer:i COMMA  RCURLY GREEDY_PLUS
+                {: RESULT = new RepetitionNode(2, r, i, QuantifierType.POSSESSIVE);
+                :}
+                 | LPAREN regexNode:r RPAREN LCURLY integer:i COMMA  RCURLY GREEDY_OPTIONAL
+                {: RESULT = new RepetitionNode(2, r, i, QuantifierType.LAZY);
+                :}
+
                 | LPAREN regexNode:r RPAREN LCURLY integer:i1 COMMA integer:i2 RCURLY
-                {: RESULT = new RepetitionNode(3,r, i1, i2); 
+                {: RESULT = new RepetitionNode(3,r, i1, i2, QuantifierType.GREEDY);
                 :}
+                | LPAREN regexNode:r RPAREN LCURLY integer:i1 COMMA integer:i2 RCURLY GREEDY_PLUS
+                {: RESULT = new RepetitionNode(3,r, i1, i2, QuantifierType.POSSESSIVE);
+                :}
+                | LPAREN regexNode:r RPAREN LCURLY integer:i1 COMMA integer:i2 RCURLY GREEDY_OPTIONAL
+                {: RESULT = new RepetitionNode(3,r, i1, i2, QuantifierType.LAZY);
+                :}
+
                 | outsideChar:r LCURLY integer:i RCURLY
-                {: RESULT = new RepetitionNode(1,r,i); 
-                :}                      
+                {: RESULT = new RepetitionNode(1, r, i, QuantifierType.GREEDY);
+                :}
+                | outsideChar:r LCURLY integer:i RCURLY GREEDY_PLUS
+                {: RESULT = new RepetitionNode(1, r, i, QuantifierType.POSSESSIVE);
+                :}
+                | outsideChar:r LCURLY integer:i RCURLY GREEDY_OPTIONAL
+                {: RESULT = new RepetitionNode(1, r, i, QuantifierType.LAZY);
+                :}
+
                 | outsideChar:r LCURLY integer:i COMMA  RCURLY
-                {: RESULT = new RepetitionNode(2,r,i); 
+                {: RESULT = new RepetitionNode(2, r, i, QuantifierType.GREEDY);
                 :}
+                | outsideChar:r LCURLY integer:i COMMA  RCURLY GREEDY_PLUS
+                {: RESULT = new RepetitionNode(2, r, i, QuantifierType.POSSESSIVE);
+                :}
+                | outsideChar:r LCURLY integer:i COMMA  RCURLY GREEDY_OPTIONAL
+                {: RESULT = new RepetitionNode(2, r, i, QuantifierType.LAZY);
+                :}
+
                 | outsideChar:r LCURLY integer:i1 COMMA integer:i2 RCURLY
-                {: RESULT = new RepetitionNode(3,r, i1, i2); 
+                {: RESULT = new RepetitionNode(3, r, i1, i2, QuantifierType.GREEDY);
                 :}
+                | outsideChar:r LCURLY integer:i1 COMMA integer:i2 RCURLY GREEDY_PLUS
+                {: RESULT = new RepetitionNode(3, r, i1, i2, QuantifierType.POSSESSIVE);
+                :}
+                | outsideChar:r LCURLY integer:i1 COMMA integer:i2 RCURLY GREEDY_OPTIONAL
+                {: RESULT = new RepetitionNode(3, r, i1, i2, QuantifierType.LAZY);
+                :}
+
                 | characterClass:r LCURLY integer:i RCURLY
-                {: RESULT = new RepetitionNode(1,r,i); 
-                :}                      
+                {: RESULT = new RepetitionNode(1, r, i, QuantifierType.GREEDY);
+                :}
+                | characterClass:r LCURLY integer:i RCURLY GREEDY_PLUS
+                {: RESULT = new RepetitionNode(1, r, i, QuantifierType.POSSESSIVE);
+                :}
+                | characterClass:r LCURLY integer:i RCURLY GREEDY_OPTIONAL
+                {: RESULT = new RepetitionNode(1, r, i, QuantifierType.LAZY);
+                :}
+
                 | characterClass:r LCURLY integer:i COMMA  RCURLY
-                {: RESULT = new RepetitionNode(2,r,i); 
+                {: RESULT = new RepetitionNode(2, r, i, QuantifierType.GREEDY);
                 :}
+                | characterClass:r LCURLY integer:i COMMA  RCURLY GREEDY_PLUS
+                {: RESULT = new RepetitionNode(2, r, i, QuantifierType.POSSESSIVE);
+                :}
+                | characterClass:r LCURLY integer:i COMMA  RCURLY GREEDY_OPTIONAL
+                {: RESULT = new RepetitionNode(2, r, i, QuantifierType.LAZY);
+                :}
+
                 | characterClass:r LCURLY integer:i1 COMMA integer:i2 RCURLY
-                {: RESULT = new RepetitionNode(3,r, i1, i2); 
+                {: RESULT = new RepetitionNode(3,r, i1, i2, QuantifierType.GREEDY);
                 :}
+                | characterClass:r LCURLY integer:i1 COMMA integer:i2 RCURLY GREEDY_PLUS
+                {: RESULT = new RepetitionNode(3,r, i1, i2, QuantifierType.POSSESSIVE);
+                :}
+                | characterClass:r LCURLY integer:i1 COMMA integer:i2 RCURLY GREEDY_OPTIONAL
+                {: RESULT = new RepetitionNode(3,r, i1, i2, QuantifierType.LAZY);
+                :}
+
                 | notcharacterClass:r LCURLY integer:i RCURLY
-                {: RESULT = new RepetitionNode(1,r,i); 
-                :}                      
-                | notcharacterClass:r LCURLY integer:i COMMA  RCURLY
-                {: RESULT = new RepetitionNode(2,r,i); 
+                {: RESULT = new RepetitionNode(1, r, i, QuantifierType.GREEDY);
                 :}
+                | notcharacterClass:r LCURLY integer:i RCURLY GREEDY_PLUS
+                {: RESULT = new RepetitionNode(1, r, i, QuantifierType.POSSESSIVE);
+                :}
+                | notcharacterClass:r LCURLY integer:i RCURLY GREEDY_OPTIONAL
+                {: RESULT = new RepetitionNode(1, r, i, QuantifierType.LAZY);
+                :}
+
+                | notcharacterClass:r LCURLY integer:i COMMA  RCURLY
+                {: RESULT = new RepetitionNode(2, r, i, QuantifierType.GREEDY);
+                :}
+                | notcharacterClass:r LCURLY integer:i COMMA  RCURLY GREEDY_PLUS
+                {: RESULT = new RepetitionNode(2, r, i, QuantifierType.POSSESSIVE);
+                :}
+                | notcharacterClass:r LCURLY integer:i COMMA  RCURLY GREEDY_OPTIONAL
+                {: RESULT = new RepetitionNode(2, r, i, QuantifierType.LAZY);
+                :}
+
                 | notcharacterClass:r LCURLY integer:i1 COMMA integer:i2 RCURLY
-                {: RESULT = new RepetitionNode(3,r, i1, i2); 
+                {: RESULT = new RepetitionNode(3, r, i1, i2, QuantifierType.GREEDY);
+                :}
+                | notcharacterClass:r LCURLY integer:i1 COMMA integer:i2 RCURLY GREEDY_PLUS
+                {: RESULT = new RepetitionNode(3, r, i1, i2, QuantifierType.POSSESSIVE);
+                :}
+                | notcharacterClass:r LCURLY integer:i1 COMMA integer:i2 RCURLY GREEDY_OPTIONAL
+                {: RESULT = new RepetitionNode(3, r, i1, i2, QuantifierType.LAZY);
                 :}
                 ;
-                
-characterClass ::= LBRACKET intervals:i RBRACKET  
-                   {: RESULT = new CharacterClassNode(i); 
-                   :}    
-                   | LBRACKET intervals:i insideChar:c MINUS RBRACKET  
-                   {: 
+
+characterClass ::= LBRACKET intervals:i RBRACKET
+                   {: RESULT = new CharacterClassNode(i);
+                   :}
+                   | LBRACKET intervals:i insideChar:c MINUS RBRACKET
+                   {:
                     CharacterClassNode node = new CharacterClassNode(i);
                     node.addInterval(new IntervalNode(c));
                     node.addInterval(new IntervalNode(new NormalCharNode('-')));
                     RESULT = node;
-                    :}  
+                    :}
                    ;
-                    
+
 notcharacterClass ::=  LBRACKET CARET intervals:i insideChar:c MINUS RBRACKET
                     {: NotCharacterClassNode node = new NotCharacterClassNode(i);
                     node.addInterval(new IntervalNode(c));
                     node.addInterval(new IntervalNode(new NormalCharNode('-')));
-                    RESULT = node; 
+                    RESULT = node;
                     :}
                     | LBRACKET CARET intervals:i RBRACKET
-                    {: RESULT = new NotCharacterClassNode(i); 
+                    {: RESULT = new NotCharacterClassNode(i);
                     :}
                     ;
-                
-integer ::= integer:i DIGIT:d 
+
+integer ::= integer:i DIGIT:d
           {: RESULT = Integer.parseInt(String.valueOf(d.charVal))+ i*10;
           :}
           | DIGIT:d
-          {: RESULT = Integer.parseInt(String.valueOf(d.charVal)); 
+          {: RESULT = Integer.parseInt(String.valueOf(d.charVal));
           :}
           ;
-    
-intervals	::=	 intervals:ilist interval:i  
+
+intervals	::=	 intervals:ilist interval:i
             {: ilist.addLast(i);
                RESULT = ilist;
             :}
             | /* epsilon */
-            {: RESULT = new LinkedList<IntervalNode>(); 
+            {: RESULT = new LinkedList<IntervalNode>();
             :}
             ;
 
 interval	::=	insideChar:c1 MINUS insideChar:c2
-            {: RESULT = new IntervalNode(c1, c2); 
+            {: RESULT = new IntervalNode(c1, c2);
             :}
             | insideChar:c
-            {: RESULT = new IntervalNode(c); 
+            {: RESULT = new IntervalNode(c);
             :}
-            | metaChar:m 
-            {: RESULT = new IntervalNode(m); 
-            :} 
+            | metaChar:m
+            {: RESULT = new IntervalNode(m);
+            :}
             ;
-        
+
 insideChar ::=  DIGIT:c
-                {: RESULT = new NormalCharNode(c.charVal); 
+                {: RESULT = new NormalCharNode(c.charVal);
                 :}
-                | ESCAPEDCHAR:c 
-                {: RESULT = new EscapedCharNode(c.charVal); 
+                | ESCAPEDCHAR:c
+                {: RESULT = new EscapedCharNode(c.charVal);
                 :}
-                | NOTDIGIT:c 
-                {: RESULT = new NormalCharNode(c.charVal); 
+                | NOTDIGIT:c
+                {: RESULT = new NormalCharNode(c.charVal);
                 :}
-                | MINUS:c 
-                {: RESULT = new NormalCharNode('-'); 
+                | MINUS:c
+                {: RESULT = new NormalCharNode('-');
                 :}
-                | DOT 
-                {: RESULT = new NormalCharNode('.'); 
+                | DOT
+                {: RESULT = new NormalCharNode('.');
                 :}
-                | PLUS 
-                {: RESULT = new NormalCharNode('+'); 
+                | GREEDY_PLUS
+                {: RESULT = new NormalCharNode('+');
                 :}
-                | STAR 
-                {: RESULT = new NormalCharNode('*'); 
+                | GREEDY_STAR
+                {: RESULT = new NormalCharNode('*');
                 :}
-                | OPTIONAL 
+                | GREEDY_OPTIONAL
                 {: RESULT = new NormalCharNode('?'); 
                 :}
                 | CARET 

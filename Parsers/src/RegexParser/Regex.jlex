@@ -140,39 +140,87 @@ return new Symbol(sym.EOF);
             return S;
           }
           
+"++"       { Symbol S = new Symbol(sym.POSSESSIVE_PLUS, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += 2;
+            return S;
+          }
 
-          
-"+"       { Symbol S = new Symbol(sym.PLUS, new TokenVal(yyline+1, CharNum.num));
+"+?"       { Symbol S = new Symbol(sym.LAZY_PLUS, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += 2;
+            return S;
+          }
+
+"+"       { Symbol S = new Symbol(sym.GREEDY_PLUS, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
           }
-          
-"*"       { Symbol S = new Symbol(sym.STAR, new TokenVal(yyline+1, CharNum.num));
+
+"*+"       { Symbol S = new Symbol(sym.POSSESSIVE_STAR, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += 2;
+            return S;
+          }
+
+"*?"       { Symbol S = new Symbol(sym.LAZY_STAR, new TokenVal(yyline+1, CharNum.num));
+          CharNum.num += 2;
+          return S;
+          }
+
+"*"       { Symbol S = new Symbol(sym.GREEDY_STAR, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
           }
-          
-"?"       { Symbol S = new Symbol(sym.OPTIONAL, new TokenVal(yyline+1, CharNum.num));
+
+"?+"       { Symbol S = new Symbol(sym.POSSESSIVE_OPTIONAL, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += 2;
+            return S;
+          }
+
+"??"       { Symbol S = new Symbol(sym.LAZY_OPTIONAL, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += 2;
+            return S;
+          }
+
+"?"       { Symbol S = new Symbol(sym.GREEDY_OPTIONAL, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
           }
-          
+
 "^"       { Symbol S = new Symbol(sym.CARET, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
-          } 
+          }
 "$"       { Symbol S = new Symbol(sym.DOLLAR, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
           }
-          
+
 "["       { Symbol S = new Symbol(sym.LBRACKET, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
           }
-          
+
 "]"       { Symbol S = new Symbol(sym.RBRACKET, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
+            return S;
+          }
+
+"(?="     { Symbol S = new Symbol(sym.POS_LOOKAHEAD, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += 3;
+            return S;
+          }
+
+"(?!"     { Symbol S = new Symbol(sym.NEG_LOOKAHEAD, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += 3;
+            return S;
+          }
+
+"(?>"     { Symbol S = new Symbol(sym.ATOMIC_GROUP, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += 3;
+            return S;
+          }
+
+"(?:"     { Symbol S = new Symbol(sym.NON_CAPTURE, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += 3;
             return S;
           }
           

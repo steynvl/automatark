@@ -5,7 +5,8 @@ import java.io.PrintWriter;
 import RegexParser.RegexNode;
 
 public class RepetitionNode extends RegexNode {
-	public RepetitionNode(int m, RegexNode reg, int minimum) {
+
+	public RepetitionNode(int m, RegexNode reg, int minimum, QuantifierType quantifierType) {
 		if (m == 1) {
 			this.mode = "min";
 			myRegex1 = reg;
@@ -18,9 +19,11 @@ public class RepetitionNode extends RegexNode {
 		} else {
 			System.err.println("Wrong construction of RepetitionNode");
 		}
+
+		this.quantifierType = quantifierType;
 	}
 
-	public RepetitionNode(int m, RegexNode reg, int minimum, int maximum) {
+	public RepetitionNode(int m, RegexNode reg, int minimum, int maximum, QuantifierType quantifierType) {
 		if (m == 3) {
 			this.mode = "minToMax";
 			myRegex1 = reg;
@@ -29,9 +32,11 @@ public class RepetitionNode extends RegexNode {
 		} else {
 			System.err.println("Wrong construction of RepetitionNode");
 		}
+
+		this.quantifierType = quantifierType;
 	}
 	
-	public RegexNode getMyRegex1(){
+	public RegexNode getMyRegex1() {
 		return myRegex1;
 	}
 
@@ -101,4 +106,6 @@ public class RepetitionNode extends RegexNode {
 	protected int max;
 	protected String mode;
 	protected RegexNode myRegex1;
+
+	public QuantifierType quantifierType;
 }
