@@ -18,4 +18,9 @@ public class DotNode extends CharNode{
 		s.append("Dot");
 		//s.append(myChar);
 	}
+
+	@Override
+	public void toRaw(StringBuilder s) {
+		s.append(".");
+	}
 }

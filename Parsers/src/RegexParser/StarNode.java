@@ -28,6 +28,11 @@ public class StarNode extends RegexNode {
 		s.append(")*");
 	}
 
+	@Override
+	public void toRaw(StringBuilder s) {
+		toString(s);
+	}
+
 	// one kid
 	protected RegexNode myRegex1;
 

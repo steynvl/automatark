@@ -33,6 +33,11 @@ public class ConcatenationNode extends RegexNode {
 		}
 	}
 
+	@Override
+	public void toRaw(StringBuilder s) {
+		toString(s);
+	}
+
 	public void unparse(PrintWriter p) {
 		Iterator<RegexNode> it = myConcateList.iterator();
 		try {

@@ -90,6 +90,11 @@ public class RepetitionNode extends RegexNode {
 
 	}
 
+	@Override
+	public void toRaw(StringBuilder s) {
+		toString(s);
+	}
+
 	public String getMode() {
 		return mode;
 	}

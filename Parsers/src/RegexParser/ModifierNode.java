@@ -40,6 +40,11 @@ public class ModifierNode extends RegexNode {
 
 	}
 
+	@Override
+	public void toRaw(StringBuilder s) {
+		toString(s);
+	}
+
 	public RegexNode getMyRegex1() {
 		return myRegex1;
 	}

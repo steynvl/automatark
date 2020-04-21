@@ -42,6 +42,11 @@ public class CharacterClassNode extends RegexNode{
         
         s.append("]");
 	}
+
+	@Override
+	public void toRaw(StringBuilder s) {
+		toString(s);
+	}
 	
 	public List<IntervalNode> getIntervals(){
     	return myList;

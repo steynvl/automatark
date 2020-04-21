@@ -35,6 +35,11 @@ public class UnionNode extends RegexNode {
 		s.append(")");
 	}
 
+	@Override
+	public void toRaw(StringBuilder s) {
+		toString(s);
+	}
+
 	// two kids
 	protected RegexNode myRegex1;
 	protected RegexNode myRegex2;

@@ -43,4 +43,11 @@ public class EscapedCharNode extends CharNode{
 		s.append("Escaped:");
 		s.append(myChar);
 	}
+
+	@Override
+	public void toRaw(StringBuilder s) {
+		s.append("\\");
+		s.append(myChar);
+	}
+
 }

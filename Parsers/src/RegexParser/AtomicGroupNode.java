@@ -27,6 +27,11 @@ public class AtomicGroupNode extends RegexNode {
         s.append(")");
     }
 
+    @Override
+    public void toRaw(StringBuilder s) {
+        toString(s);
+    }
+
     // one child
     public RegexNode myRegex1;
 }

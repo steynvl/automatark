@@ -57,6 +57,11 @@ public class IntervalNode extends RegexNode {
 		}
 	}
 
+	@Override
+	public void toRaw(StringBuilder s) {
+		toString(s);
+	}
+
 	private String mode;
 	private CharNode myChar1;
 	private CharNode myChar2;

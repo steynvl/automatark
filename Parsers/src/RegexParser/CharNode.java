@@ -17,6 +17,11 @@ public class CharNode extends RegexNode{
 	public void toString(StringBuilder s) {
 		s.append(myChar);
 	}
+
+	@Override
+	public void toRaw(StringBuilder s) {
+		toString(s);
+	}
 	
 	public char getChar(){
 		return myChar;

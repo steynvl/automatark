@@ -17,4 +17,9 @@ public class NormalCharNode extends CharNode{
 		s.append(myChar);
 	}
 
+	@Override
+	public void toRaw(StringBuilder s) {
+		s.append(myChar);
+	}
+
 }

@@ -42,6 +42,21 @@ public class AnchorNode extends RegexNode{
 		}
 		
 	}
+
+	@Override
+	public void toRaw(StringBuilder s) {
+		if (this.start) {
+			s.append("^");
+		}
+
+		s.append("(");
+		s.append(myRegex1.toString());
+		s.append(")");
+
+		if (this.end) {
+			s.append("$");
+		}
+	}
 	
 	public void setStartAnchor(boolean b){
 		this.start = b;

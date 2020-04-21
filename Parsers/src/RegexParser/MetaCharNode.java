@@ -39,4 +39,10 @@ public class MetaCharNode extends CharNode {
 		//s.append("\\");
 		s.append(myChar);
 	}
+
+	@Override
+	public void toRaw(StringBuilder s) {
+		s.append("\\");
+		s.append(myChar);
+	}
 }

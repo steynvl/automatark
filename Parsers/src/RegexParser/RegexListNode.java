@@ -36,6 +36,11 @@ public class RegexListNode extends FormulaNode{
 		}
 	}
 
+	@Override
+	public void toRaw(StringBuilder s) {
+		toString(s);
+	}
+
 	public void unparse(PrintWriter p) {
 		Iterator<RegexNode> it = myRegexList.iterator();
 		try {

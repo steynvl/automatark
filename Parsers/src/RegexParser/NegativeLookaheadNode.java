@@ -27,6 +27,11 @@ public class NegativeLookaheadNode extends RegexNode {
         s.append(")");
     }
 
+    @Override
+    public void toRaw(StringBuilder s) {
+        toString(s);
+    }
+
     // one child
     protected RegexNode myRegex1;
 }
