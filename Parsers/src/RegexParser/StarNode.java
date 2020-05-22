@@ -33,6 +33,11 @@ public class StarNode extends RegexNode {
 		toString(s);
 	}
 
+	@Override
+	public RegexNode copy() {
+		return new StarNode(myRegex1.copy(), quantifierType);
+	}
+
 	// one kid
 	protected RegexNode myRegex1;
 

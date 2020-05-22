@@ -32,6 +32,11 @@ public class AtomicGroupNode extends RegexNode {
         toString(s);
     }
 
+    @Override
+    public RegexNode copy() {
+        return new AtomicGroupNode(myRegex1.copy());
+    }
+
     // one child
     public RegexNode myRegex1;
 }

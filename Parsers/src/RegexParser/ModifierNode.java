@@ -45,6 +45,15 @@ public class ModifierNode extends RegexNode {
 		toString(s);
 	}
 
+	@Override
+	public RegexNode copy() {
+		StringBuilder sb = new StringBuilder();
+		for (char c : mySet) {
+			sb.append(c);
+		}
+		return new ModifierNode(myRegex1.copy(), sb.toString());
+	}
+
 	public RegexNode getMyRegex1() {
 		return myRegex1;
 	}

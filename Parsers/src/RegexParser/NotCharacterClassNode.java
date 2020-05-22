@@ -2,6 +2,7 @@ package RegexParser;
 
 import java.io.PrintWriter;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -46,6 +47,13 @@ public class NotCharacterClassNode extends RegexNode{
 	@Override
 	public void toRaw(StringBuilder s) {
 		toString(s);
+	}
+
+	@Override
+	public RegexNode copy() {
+		List<IntervalNode> copy = new LinkedList<>();
+		myList.forEach(n -> copy.add((IntervalNode) n.copy()));
+		return new NotCharacterClassNode(copy);
 	}
 	
 	public List<IntervalNode> getIntervals(){

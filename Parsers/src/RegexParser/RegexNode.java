@@ -4,4 +4,6 @@ public abstract class RegexNode extends FormulaNode {
 
     public RegexNode parent;
 
+    abstract public RegexNode copy();
+
 }

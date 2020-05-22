@@ -22,7 +22,12 @@ public class CharNode extends RegexNode{
 	public void toRaw(StringBuilder s) {
 		toString(s);
 	}
-	
+
+	@Override
+	public RegexNode copy() {
+		return new CharNode(myChar);
+	}
+
 	public char getChar(){
 		return myChar;
 	}

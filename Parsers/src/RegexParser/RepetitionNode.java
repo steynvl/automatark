@@ -95,6 +95,17 @@ public class RepetitionNode extends RegexNode {
 		toString(s);
 	}
 
+	@Override
+	public RegexNode copy() {
+		if (mode.equals("min")) {
+			return new RepetitionNode(1, myRegex1, min, quantifierType);
+		} else if (mode.equals("minToInfinite")) {
+			return new RepetitionNode(2, myRegex1, min, quantifierType);
+		} else {
+			return new RepetitionNode(3, myRegex1, min, max, quantifierType);
+		}
+	}
+
 	public String getMode() {
 		return mode;
 	}

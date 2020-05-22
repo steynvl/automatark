@@ -32,6 +32,11 @@ public class PositiveLookaheadNode extends RegexNode {
         toString(s);
     }
 
+    @Override
+    public RegexNode copy() {
+        return new PositiveLookaheadNode(myRegex1.copy());
+    }
+
     // one child
     protected RegexNode myRegex1;
 }

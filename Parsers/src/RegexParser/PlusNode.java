@@ -32,6 +32,11 @@ public class PlusNode extends RegexNode {
 		toString(s);
 	}
 
+	@Override
+	public RegexNode copy() {
+		return new PlusNode(myRegex1.copy(), quantifierType);
+	}
+
 	// one kid
 	protected RegexNode myRegex1;
 

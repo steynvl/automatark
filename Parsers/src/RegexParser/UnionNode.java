@@ -40,6 +40,11 @@ public class UnionNode extends RegexNode {
 		toString(s);
 	}
 
+	@Override
+	public RegexNode copy() {
+		return new UnionNode(myRegex1.copy(), myRegex2.copy());
+	}
+
 	// two kids
 	protected RegexNode myRegex1;
 	protected RegexNode myRegex2;

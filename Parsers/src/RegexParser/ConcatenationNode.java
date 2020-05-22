@@ -2,6 +2,7 @@ package RegexParser;
 
 import java.io.PrintWriter;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -53,6 +54,13 @@ public class ConcatenationNode extends RegexNode {
 			System.exit(-1);
 		}
 
+	}
+
+	@Override
+	public RegexNode copy() {
+		List<RegexNode> copy = new LinkedList<>();
+		myConcateList.forEach(n -> copy.add(n.copy()));
+		return new ConcatenationNode(copy);
 	}
 
 	// two kids

@@ -53,6 +53,11 @@ public class AnchorNode extends RegexNode {
 			s.append("$");
 		}
 	}
+
+	@Override
+	public RegexNode copy() {
+		return new AnchorNode(start, end);
+	}
 	
 	public void setStartAnchor(boolean b){
 		this.start = b;

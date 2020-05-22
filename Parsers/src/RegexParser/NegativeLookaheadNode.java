@@ -32,6 +32,11 @@ public class NegativeLookaheadNode extends RegexNode {
         toString(s);
     }
 
+    @Override
+    public RegexNode copy() {
+        return new NegativeLookaheadNode(myRegex1.copy());
+    }
+
     // one child
     protected RegexNode myRegex1;
 }

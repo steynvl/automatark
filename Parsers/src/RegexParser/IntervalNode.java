@@ -62,6 +62,15 @@ public class IntervalNode extends RegexNode {
 		toString(s);
 	}
 
+	@Override
+	public RegexNode copy() {
+		if (mode.equals("single")) {
+			return new IntervalNode(myChar1);
+		} else {
+			return new IntervalNode(myChar1, myChar2);
+		}
+	}
+
 	private String mode;
 	private CharNode myChar1;
 	private CharNode myChar2;
