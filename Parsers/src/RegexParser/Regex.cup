@@ -91,7 +91,6 @@ precedence right LCURLY, RBRACKET;
 precedence left RCURLY, LBRACKET;
 precedence left DOLLAR, CARET;
 
-
 /* Grammar with actions */
 
 start with program;
@@ -101,16 +100,7 @@ program ::= regexNode: r
         :}
         ;
 
-regexNode	::= CARET unionRegex:r
-            {: RESULT = new AnchorNode(r,true,false);
-            :}
-            | CARET unionRegex:r DOLLAR
-            {: RESULT = new AnchorNode(r,true,true);
-            :}
-            | unionRegex:r DOLLAR
-            {: RESULT = new AnchorNode(r,false,true);
-            :}
-            | unionRegex:r
+regexNode	::= unionRegex:r
             {: RESULT = r;
             :}
             ;
@@ -170,6 +160,12 @@ basicRegex	    ::=	 LPAREN regexNode:r RPAREN
                 :}
                 | DOT
                 {: RESULT = new DotNode('.');
+                :}
+                | CARET
+                {: RESULT = new AnchorNode(true, false);
+                :}
+                | DOLLAR
+                {: RESULT = new AnchorNode(false, true);
                 :}
                 | outsideChar: c
                 {: RESULT = c;

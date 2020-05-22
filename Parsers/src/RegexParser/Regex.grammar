@@ -80,6 +80,8 @@ basicRegex	::= "(" regexNode ")"
 
                 | "."           // meta character, all characters except line breaker
 
+                | "$"
+
                 | outsideChar   //chacters that can be outside of characterClass
 
                 | characterClass

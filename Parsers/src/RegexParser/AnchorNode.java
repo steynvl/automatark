@@ -2,17 +2,13 @@ package RegexParser;
 
 import java.io.PrintWriter;
 
-public class AnchorNode extends RegexNode{
+public class AnchorNode extends RegexNode {
 	
-	public AnchorNode(RegexNode r, boolean b1, boolean b2) {
-		myRegex1 = r;
+	public AnchorNode(boolean b1, boolean b2) {
 		this.start = b1;
 		this.end = b2;
 	}
 	
-	public RegexNode getMyRegex1() {
-		return myRegex1;
-	}
 	@Override
 	public void unparse(PrintWriter p) {
 		//both start of String and end of String
@@ -20,9 +16,9 @@ public class AnchorNode extends RegexNode{
 		if(this.start){
 			p.print("SOS");
 		}
-		p.print("(");
-		myRegex1.unparse(p);
-		p.print(")");
+//		p.print("(");
+//		myRegex1.unparse(p);
+//		p.print(")");
 		if(this.end){
 			p.print("EOS");
 		}
@@ -34,9 +30,9 @@ public class AnchorNode extends RegexNode{
 		if(this.start){
 			s.append("SOS");
 		}
-		s.append("(");
-		myRegex1.toString(s);
-		s.append(")");
+//		s.append("(");
+//		myRegex1.toString(s);
+//		s.append(")");
 		if(this.end){
 			s.append("EOS");
 		}
@@ -49,9 +45,9 @@ public class AnchorNode extends RegexNode{
 			s.append("^");
 		}
 
-		s.append("(");
-		s.append(myRegex1.toString());
-		s.append(")");
+//		s.append("(");
+//		s.append(myRegex1.toString());
+//		s.append(")");
 
 		if (this.end) {
 			s.append("$");
@@ -74,7 +70,6 @@ public class AnchorNode extends RegexNode{
 	}
 	
 	
-	protected RegexNode myRegex1;
 	protected boolean start;
 	protected boolean end;
 }
