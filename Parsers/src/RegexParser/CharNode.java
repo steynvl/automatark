@@ -20,7 +20,7 @@ public class CharNode extends RegexNode{
 
 	@Override
 	public void toRaw(StringBuilder s) {
-		toString(s);
+		s.append(myChar);
 	}
 
 	@Override

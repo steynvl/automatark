@@ -36,7 +36,16 @@ public class RegexListNode extends FormulaNode{
 
 	@Override
 	public void toRaw(StringBuilder s) {
-		toString(s);
+		Iterator<RegexNode> it = myRegexList.iterator();
+		try {
+			while (it.hasNext()) {
+				((RegexNode) it.next()).toRaw(s);
+				s.append(System.getProperty("line.separator"));
+			}
+		} catch (NoSuchElementException ex) {
+			System.err.println("unexpected NoSuchElementException in RegexListNode.toString");
+			System.exit(-1);
+		}
 	}
 
 	public void unparse(PrintWriter p) {

@@ -1,6 +1,8 @@
 package RegexParser;
 
-public abstract class RegexNode extends FormulaNode {
+import java.io.Serializable;
+
+public abstract class RegexNode extends FormulaNode implements Serializable {
 
     public RegexNode parent;
 

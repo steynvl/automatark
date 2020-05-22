@@ -37,12 +37,18 @@ public class ModifierNode extends RegexNode {
 				s.append(c);
 			}
 		}
-
 	}
 
 	@Override
 	public void toRaw(StringBuilder s) {
-		toString(s);
+		s.append("/");
+		myRegex1.toRaw(s);
+		s.append("/Modifiers: ");
+		if (!mySet.isEmpty()) {
+			for (char c : this.mySet) {
+				s.append(c);
+			}
+		}
 	}
 
 	@Override

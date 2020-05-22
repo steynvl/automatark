@@ -36,7 +36,19 @@ public class ConcatenationNode extends RegexNode {
 
 	@Override
 	public void toRaw(StringBuilder s) {
-		toString(s);
+		Iterator<RegexNode> it = myConcateList.iterator();
+		try {
+
+			while (it.hasNext()) {
+				s.append("(");
+				((RegexNode) it.next()).toRaw(s);
+				s.append(")");
+			}
+
+		} catch (NoSuchElementException ex) {
+			System.err.println("unexpected NoSuchElementException in RegexListNode.toString");
+			System.exit(-1);
+		}
 	}
 
 	public void unparse(PrintWriter p) {

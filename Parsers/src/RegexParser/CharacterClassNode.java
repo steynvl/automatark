@@ -46,7 +46,18 @@ public class CharacterClassNode extends RegexNode{
 
 	@Override
 	public void toRaw(StringBuilder s) {
-		toString(s);
+		s.append("[");
+		Iterator<IntervalNode> it = myList.iterator();
+		try {
+			while (it.hasNext()) {
+				((IntervalNode)it.next()).toString(s);
+			}
+		} catch (NoSuchElementException ex) {
+			System.err.println("unexpected NoSuchElementException in CharacterClassNode.print");
+			System.exit(-1);
+		}
+
+		s.append("]");
 	}
 
 	@Override

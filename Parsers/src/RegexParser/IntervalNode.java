@@ -59,7 +59,15 @@ public class IntervalNode extends RegexNode {
 
 	@Override
 	public void toRaw(StringBuilder s) {
-		toString(s);
+		if (mode.equals("single")) {
+			myChar1.toRaw(s);
+			s.append(" ");
+		} else {
+			myChar1.toRaw(s);
+			s.append("-");
+			myChar2.toRaw(s);
+			s.append(" ");
+		}
 	}
 
 	@Override
