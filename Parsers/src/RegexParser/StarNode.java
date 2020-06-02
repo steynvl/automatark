@@ -30,7 +30,9 @@ public class StarNode extends RegexNode {
 
 	@Override
 	public void toRaw(StringBuilder s) {
-		toString(s);
+		s.append("(");
+		myRegex1.toRaw(s);
+		s.append(")*");
 	}
 
 	@Override
