@@ -1,7 +1,9 @@
 package RegexParser;
 
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class ModifierNode extends RegexNode {
@@ -58,6 +60,11 @@ public class ModifierNode extends RegexNode {
 			sb.append(c);
 		}
 		return new ModifierNode(myRegex1.copy(), sb.toString());
+	}
+
+	@Override
+	public List<RegexNode> children() {
+		return Arrays.asList(myRegex1);
 	}
 
 	public RegexNode getMyRegex1() {

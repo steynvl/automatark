@@ -1,6 +1,8 @@
 package RegexParser;
 
 import java.io.PrintWriter;
+import java.util.LinkedList;
+import java.util.List;
 
 public class AnchorNode extends RegexNode {
 	
@@ -11,14 +13,10 @@ public class AnchorNode extends RegexNode {
 	
 	@Override
 	public void unparse(PrintWriter p) {
-		//both start of String and end of String
-		
 		if(this.start){
 			p.print("SOS");
 		}
-//		p.print("(");
-//		myRegex1.unparse(p);
-//		p.print(")");
+
 		if(this.end){
 			p.print("EOS");
 		}
@@ -26,13 +24,10 @@ public class AnchorNode extends RegexNode {
 
 	@Override
 	public void toString(StringBuilder s) {
-		//both start of String and end of String
 		if(this.start){
 			s.append("SOS");
 		}
-//		s.append("(");
-//		myRegex1.toString(s);
-//		s.append(")");
+
 		if(this.end){
 			s.append("EOS");
 		}
@@ -45,10 +40,6 @@ public class AnchorNode extends RegexNode {
 			s.append("^");
 		}
 
-//		s.append("(");
-//		s.append(myRegex1.toString());
-//		s.append(")");
-
 		if (this.end) {
 			s.append("$");
 		}
@@ -58,7 +49,12 @@ public class AnchorNode extends RegexNode {
 	public RegexNode copy() {
 		return new AnchorNode(start, end);
 	}
-	
+
+	@Override
+	public List<RegexNode> children() {
+		return new LinkedList<>();
+	}
+
 	public void setStartAnchor(boolean b){
 		this.start = b;
 	}

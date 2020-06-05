@@ -1,6 +1,8 @@
 package RegexParser;
 
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.List;
 
 public class PositiveLookaheadNode extends RegexNode {
 
@@ -37,6 +39,11 @@ public class PositiveLookaheadNode extends RegexNode {
     @Override
     public RegexNode copy() {
         return new PositiveLookaheadNode(myRegex1.copy());
+    }
+
+    @Override
+    public List<RegexNode> children() {
+        return Arrays.asList(myRegex1);
     }
 
     // one child

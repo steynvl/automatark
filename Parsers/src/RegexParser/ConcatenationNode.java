@@ -1,12 +1,7 @@
 package RegexParser;
 
 import java.io.PrintWriter;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.NoSuchElementException;
-
-import RegexParser.RegexNode;
+import java.util.*;
 
 public class ConcatenationNode extends RegexNode {
 	public ConcatenationNode(List<RegexNode> S) {
@@ -73,6 +68,11 @@ public class ConcatenationNode extends RegexNode {
 		List<RegexNode> copy = new LinkedList<>();
 		myConcateList.forEach(n -> copy.add(n.copy()));
 		return new ConcatenationNode(copy);
+	}
+
+	@Override
+	public List<RegexNode> children() {
+		return new LinkedList<>(myConcateList);
 	}
 
 	// two kids

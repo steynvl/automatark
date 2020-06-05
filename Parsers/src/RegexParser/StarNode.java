@@ -1,6 +1,8 @@
 package RegexParser;
 
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.List;
 
 public class StarNode extends RegexNode {
 
@@ -38,6 +40,11 @@ public class StarNode extends RegexNode {
 	@Override
 	public RegexNode copy() {
 		return new StarNode(myRegex1.copy(), quantifierType);
+	}
+
+	@Override
+	public List<RegexNode> children() {
+		return Arrays.asList(myRegex1);
 	}
 
 	// one kid

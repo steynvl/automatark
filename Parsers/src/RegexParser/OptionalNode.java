@@ -1,6 +1,8 @@
 package RegexParser;
 
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.List;
 
 public class OptionalNode extends RegexNode {
 
@@ -36,6 +38,11 @@ public class OptionalNode extends RegexNode {
 	@Override
 	public RegexNode copy() {
 		return new OptionalNode(myRegex1.copy(), quantifierType);
+	}
+
+	@Override
+	public List<RegexNode> children() {
+		return Arrays.asList(myRegex1);
 	}
 
 	// one kid

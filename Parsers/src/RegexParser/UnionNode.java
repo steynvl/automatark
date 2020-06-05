@@ -1,7 +1,8 @@
 package RegexParser;
 
 import java.io.PrintWriter;
-import RegexParser.RegexNode;
+import java.util.Arrays;
+import java.util.List;
 
 public class UnionNode extends RegexNode {
 	public UnionNode(RegexNode r1, RegexNode r2) {
@@ -47,6 +48,11 @@ public class UnionNode extends RegexNode {
 	@Override
 	public RegexNode copy() {
 		return new UnionNode(myRegex1.copy(), myRegex2.copy());
+	}
+
+	@Override
+	public List<RegexNode> children() {
+		return Arrays.asList(myRegex1, myRegex2);
 	}
 
 	// two kids

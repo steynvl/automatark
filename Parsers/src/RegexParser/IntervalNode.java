@@ -1,6 +1,8 @@
 package RegexParser;
 
 import java.io.PrintWriter;
+import java.util.LinkedList;
+import java.util.List;
 
 public class IntervalNode extends RegexNode {
 	public IntervalNode(CharNode c1) {
@@ -77,6 +79,11 @@ public class IntervalNode extends RegexNode {
 		} else {
 			return new IntervalNode(myChar1, myChar2);
 		}
+	}
+
+	@Override
+	public List<RegexNode> children() {
+		return new LinkedList<>();
 	}
 
 	private String mode;

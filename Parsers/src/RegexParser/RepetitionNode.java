@@ -1,6 +1,8 @@
 package RegexParser;
 
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.List;
 
 import RegexParser.RegexNode;
 
@@ -104,6 +106,11 @@ public class RepetitionNode extends RegexNode {
 		} else {
 			return new RepetitionNode(3, myRegex1, min, max, quantifierType);
 		}
+	}
+
+	@Override
+	public List<RegexNode> children() {
+		return Arrays.asList(myRegex1);
 	}
 
 	public String getMode() {

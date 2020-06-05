@@ -1,6 +1,8 @@
 package RegexParser;
 
 import java.io.PrintWriter;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class CharNode extends RegexNode{
@@ -26,6 +28,11 @@ public class CharNode extends RegexNode{
 	@Override
 	public RegexNode copy() {
 		return new CharNode(myChar);
+	}
+
+	@Override
+	public List<RegexNode> children() {
+		return new LinkedList<>();
 	}
 
 	public char getChar(){
